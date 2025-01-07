@@ -7,21 +7,21 @@
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
-var config = require('../config');
+var { CONNECTION_STRING, PORT } = require('../config');
 const Database = require('../db/Database');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(config.PORT);
+var port = normalizePort(PORT);
 app.set('port', port);
 
 /**
  * Database connection
  */
 
-new Database().connect({ CONNECTION_STRING: config.CONNECTION_STRING });
+new Database().connect({ CONNECTION_STRING });
 
 /**
  * Create HTTP server.

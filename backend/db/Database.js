@@ -15,7 +15,7 @@ class Database {
   async connect(options) {
     try {
       let db = await mongoose.connect(options.CONNECTION_STRING);
-      this.mongoConnection = db;
+      this.mongoConnection = await db;
       console.log('Database connection successful');
     } catch (error) {
       console.error('Database connection error :', err);
