@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const Categories = require('../../db/models/Categories');
 const Response = require('../../lib/response');
 const CustomError = require('../../lib/Error');
@@ -22,6 +23,16 @@ router.post('/', async (req, res, next) => {
         _enum.HTTP_CODES.BAD_REQUEST,
         'Validation Error!',
         'name filelds must be filled'
+      );
+    }
+
+    const existingCategory = await Categories.findOne({ name: body.name });
+
+    if (existingCategory) {
+      throw new CustomError(
+        _enum.HTTP_CODES.CONFLICT,
+        'Duplicate Error!',
+        'A category with this name already exists.'
       );
     }
 
